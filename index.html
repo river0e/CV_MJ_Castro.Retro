@@ -29,8 +29,10 @@
         <h1>MARÍA J. CASTRO RIVERO</h1>
 
         <p>
-          Estudiante de Desarrollo de Aplicaciones Multiplataforma, con amplia experiencia en atención al cliente y gestión de equipos.<br />
-          Tras más de una década dedicada a la rama sanitaria, he decidido dar el salto al sector tecnológico.<br />
+          Estudiante de Desarrollo de Aplicaciones Multiplataforma, con amplia
+          experiencia en atención al cliente y gestión de equipos.<br />
+          Tras más de una década dedicada a la rama sanitaria, he decidido dar
+          el salto al sector tecnológico.<br />
           Actualmente, busco crecer y aportar valor en proyectos innovadores.
         </p>
 
@@ -60,15 +62,23 @@
           <h2><span class="icon">🔋</span> Experiencia</h2>
           <div class="content">
             <p>
-              <strong>Prácticas en equipo de Infraestructura</strong><br /><em>VOXEL MEDIA, S.L.U 2025 (actualidad)</em><br />
-              Automatización con Terraform, metodologías ágiles y soporte en migración a Azure.
+              <strong>Prácticas en equipo de Infraestructura</strong><br /><em
+                >VOXEL MEDIA, S.L.U 2025 (actualidad)</em
+              ><br />
+              Automatización con Terraform, metodologías ágiles y soporte en
+              migración a Azure.
             </p>
             <p>
-              <strong>Higienista Bucodental</strong><br /><em>Clínica Dental AA y Collazo Bermejo 2015–2024</em><br />
-              Atención al paciente, coordinación de equipos y gestión administrativa.
+              <strong>Higienista Bucodental</strong><br /><em
+                >Clínica Dental AA y Collazo Bermejo 2015–2024</em
+              ><br />
+              Atención al paciente, coordinación de equipos y gestión
+              administrativa.
             </p>
             <p>
-              <strong>Gerente y Directora</strong><br /><em>La Batcueva Cómic 2008–2012</em><br />
+              <strong>Gerente y Directora</strong><br /><em
+                >La Batcueva Cómic 2008–2012</em
+              ><br />
               Gestión administrativa, organización de eventos y viajes a Japón.
             </p>
           </div>
@@ -99,10 +109,23 @@
         <div class="card" data-aos="fade-up" data-aos-delay="400">
           <h2><span class="icon">⚙️</span> Habilidades</h2>
           <div class="content">
-            <p><strong>Programación y desarrollo web:</strong> Java, JavaScript, HTML5, CSS3, Responsive Design.</p>
-            <p><strong>Bases de datos y herramientas:</strong> SQL, diseño básico de bases de datos, NetBeans, VS Code, Git.</p>
-            <p><strong>Cloud y DevOps:</strong> Infraestructura como Código (Terraform), Microsoft Azure (servicios Cloud básicos).</p>
-            <p><strong>Competencias transversales:</strong> Comunicación efectiva, trabajo en equipo, atención al cliente, adaptación tecnológica.</p>
+            <p>
+              <strong>Programación y desarrollo web:</strong> Java, JavaScript,
+              HTML5, CSS3, Responsive Design.
+            </p>
+            <p>
+              <strong>Bases de datos y herramientas:</strong> SQL, diseño básico
+              de bases de datos, NetBeans, VS Code, Git.
+            </p>
+            <p>
+              <strong>Cloud y DevOps:</strong> Infraestructura como Código
+              (Terraform), Microsoft Azure (servicios Cloud básicos).
+            </p>
+            <p>
+              <strong>Competencias transversales:</strong> Comunicación
+              efectiva, trabajo en equipo, atención al cliente, adaptación
+              tecnológica.
+            </p>
           </div>
         </div>
 
@@ -117,19 +140,30 @@
       </div>
     </div>
 
-<script>
-  window.addEventListener("load", () => {
-    AOS.init();
+    <script>
+      window.addEventListener("load", () => {
+        AOS.init();
 
-    // Expansión de tarjetas en móviles
-    const cards = document.querySelectorAll('.card');
-    cards.forEach(card => {
-      card.addEventListener('click', () => {
-        // Alternar clase activa al hacer clic
-        card.classList.toggle('active');
+        // Expansión de tarjetas en móviles
+        const cards = document.querySelectorAll(".card");
+
+        cards.forEach((card) => {
+          card.addEventListener("click", (e) => {
+            e.stopPropagation(); // evita que se cierre al hacer clic dentro
+            // cerrar otras activas
+            cards.forEach((c) => {
+              if (c !== card) c.classList.remove("active");
+            });
+            // alternar la actual
+            card.classList.toggle("active");
+          });
+        });
+
+        // Clic fuera de las tarjetas, se cierran todas
+        document.addEventListener("click", () => {
+          cards.forEach((card) => card.classList.remove("active"));
+        });
       });
-    });
-  });
-</script>
+    </script>
   </body>
 </html>
