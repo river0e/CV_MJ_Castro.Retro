@@ -1,6 +1,8 @@
-const container = document.querySelector('.container');
-const avatar = document.querySelector('.avatar');
+document.addEventListener('DOMContentLoaded', () => {
+  const container = document.querySelector('.container');
+  const avatarWrapper = document.querySelector('.avatar-wrapper');
 
-avatar.addEventListener('click', () => {
-  container.classList.toggle('expanded');
+  avatarWrapper.addEventListener('click', () => {
+    container.classList.toggle('expanded');
+  });
 });

@@ -1,15 +1,17 @@
 body {
   margin: 0;
-  font-family: 'Oswald', sans-serif;
+  font-family: "Oswald", sans-serif;
 }
 
 .container {
   display: flex;
+  /* quito flex-wrap para que no baje el panel */
+  /* flex-wrap: wrap; */
   min-height: 100vh;
   overflow-x: hidden;
 }
 
-/* Estado inicial: left-panel ocupa 100%, right-panel está fuera de pantalla */
+/* Estado inicial: left-panel ocupa 100%, right-panel oculto */
 .left-panel {
   background-color: #111;
   color: white;
@@ -26,16 +28,15 @@ body {
 .right-panel {
   background-color: #e2c74f;
   width: 0;
-  padding: 0px;
+  padding: 0;
   display: flex;
   flex-direction: column;
   gap: 20px;
   justify-content: center;
-  overflow: hidden;
+  overflow-y: hidden;
   transition: width 0.5s ease, padding 0.5s ease;
 }
 
-/* Cuando se abre el panel derecho */
 .container.expanded .left-panel {
   width: 30%;
 }
@@ -43,8 +44,8 @@ body {
 .container.expanded .right-panel {
   width: 70%;
   padding: 60px 30px;
+  overflow-y: auto;
 }
-
 
 .left-panel h1 {
   margin: 10px 0;
@@ -55,7 +56,6 @@ body {
   color: #ccc;
   line-height: 1.5;
 }
-
 
 .card {
   background: #fff;
@@ -69,7 +69,7 @@ body {
 
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .card .content {
@@ -80,8 +80,9 @@ body {
   transition: max-height 0.6s ease, opacity 0.6s ease, margin-top 0.6s ease;
 }
 
-.card:hover .content {
-  max-height: 300px; /* Ajusta según necesidad */
+.card:hover .content,
+.card.active .content {
+  max-height: 300px;
   opacity: 1;
   margin-top: 10px;
 }
@@ -92,3 +93,46 @@ body {
   color: #111;
 }
 
+/* RESPONSIVE para pantallas pequeñas */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    /* agregar flex-wrap para que apile bien */
+    flex-wrap: wrap;
+  }
+
+  .left-panel,
+  .right-panel {
+    width: 100% !important;
+    padding: 30px 20px !important;
+    overflow-y: visible !important;
+  }
+
+  .avatar {
+    max-width: 150px;
+    height: auto;
+  }
+
+  .left-panel h1 {
+    font-size: 20px;
+  }
+
+  .card h2 {
+    font-size: 18px;
+  }
+
+  .social-buttons {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .card {
+    padding: 15px;
+  }
+
+  .card .content {
+    max-height: none;
+    opacity: 1;
+    margin-top: 10px;
+  }
+}
