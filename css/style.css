@@ -1,138 +1,220 @@
 body {
   margin: 0;
-  font-family: "Oswald", sans-serif;
+  font-family: "Bebas Neue", sans-serif;
+  background-color: #000;
+  overflow: hidden;
 }
 
-.container {
-  display: flex;
-  /* quito flex-wrap para que no baje el panel */
-  /* flex-wrap: wrap; */
-  min-height: 100vh;
-  overflow-x: hidden;
+.page {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
 
-/* Estado inicial: left-panel ocupa 100%, right-panel oculto */
-.left-panel {
-  background-color: #111;
-  color: white;
+.front,
+.back {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  padding: 60px 30px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 1s ease, filter 1s ease;
+  backface-visibility: hidden; /* no giramos, pero por seguridad */
+  opacity: 1;
+  filter: blur(0);
+  pointer-events: auto;
+  z-index: 1;
+}
+
+.back {
+  opacity: 0;
+  filter: blur(10px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.page.transitioning .front {
+  opacity: 0;
+  filter: blur(10px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.page.transitioning .back {
+  opacity: 1;
+  filter: blur(0);
+  pointer-events: auto;
+  z-index: 1;
+}
+
+.content {
+  text-align: center;
+  max-width: 600px;
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  transition: width 0.5s ease;
 }
 
-.right-panel {
-  background-color: #e2c74f;
-  width: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  justify-content: center;
-  overflow-y: hidden;
-  transition: width 0.5s ease, padding 0.5s ease;
+.avatar {
+  width: 300px;
+  height: auto;
+  object-fit: cover;
+  margin-bottom: 20px;
+  border: 4px solid transparent; /* Borde invisible inicialmente */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+  position: relative;
+  z-index: 2;
+  opacity: 0.4; /* Imagen atenuada al inicio */
+  transition: opacity 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
 }
 
-.container.expanded .left-panel {
-  width: 30%;
+/* Al pasar el ratón por encima */
+.avatar:hover {
+  opacity: 1; /* Se ilumina */
+  border-color: #a8ff60; /* Verde pistacho */
+  box-shadow: 0 0 25px #a8ff60aa; /* Resplandor verde */
 }
 
-.container.expanded .right-panel {
-  width: 70%;
-  padding: 60px 30px;
-  overflow-y: auto;
-}
-
-.left-panel h1 {
+h1 {
+  font-size: 32px;
   margin: 10px 0;
-  font-size: 26px;
 }
 
-.left-panel p {
-  color: #ccc;
-  line-height: 1.5;
-}
-
-.card {
-  background: #fff;
-  border-radius: 10px;
-  padding: 20px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+button {
+  font-family: "Bebas Neue", sans-serif;
+  background-color: transparent;
+  color: transparent;
+  border: 2px solid transparent;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 8px;
   cursor: pointer;
   position: relative;
-  overflow: hidden;
+  transition: all 0.4s ease;
+  z-index: 3;
 }
 
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-}
-
-.card .content {
-  max-height: 0;
-  opacity: 0;
-  margin-top: 0;
-  overflow: hidden;
-  transition: max-height 0.6s ease, opacity 0.6s ease, margin-top 0.6s ease;
-}
-
-.card:hover .content,
-.card.active .content {
-  max-height: 300px;
-  opacity: 1;
-  margin-top: 10px;
-}
-
-.card h2 {
-  margin: 0;
-  font-size: 20px;
+/* Al pasar el ratón se "activa" */
+button:hover {
+  background-color: #a8ff60; /* verde pistacho */
   color: #111;
+  border-color: #a8ff60;
+  box-shadow: 0 0 10px #a8ff60, 0 0 20px #a8ff60, 0 0 40px #a8ff60;
+  animation: pulsar 1.2s infinite alternate;
 }
 
-/* RESPONSIVE para pantallas pequeñas */
-@media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-    /* agregar flex-wrap para que apile bien */
-    flex-wrap: wrap;
+/* Efecto pulsante */
+@keyframes pulsar {
+  0% {
+    box-shadow: 0 0 5px #a8ff60, 0 0 10px #a8ff60, 0 0 20px #a8ff60;
   }
+  100% {
+    box-shadow: 0 0 15px #a8ff60, 0 0 30px #a8ff60, 0 0 60px #a8ff60;
+  }
+}
 
-  .left-panel,
-  .right-panel {
-    width: 100% !important;
-    padding: 30px 20px !important;
-    overflow-y: visible !important;
+.front .big-name {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 14vw;
+  color: rgba(255, 255, 255, 0.123); /* Más visible */
+  font-weight: 900;
+  z-index: 0;
+  pointer-events: none;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.front .big-name .line1,
+.front .big-name .line2 {
+  display: block;
+}
+
+.matrix-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(2, 241, 2, 0.514) 0px,
+    rgba(0, 255, 0, 0.288) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  animation: matrixRain 4s linear infinite;
+  mix-blend-mode: screen;
+  opacity: 0.5;
+}
+
+@keyframes matrixRain {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 100px;
+  }
+}
+
+/* === Responsive para pantallas pequeñas (móviles, tablets) === */
+@media (max-width: 768px) {
+  .content {
+    padding: 1rem;
+    max-width: 90%;
   }
 
   .avatar {
-    max-width: 150px;
-    height: auto;
+    width: 80%;
+    max-width: 250px;
+    margin-bottom: 1rem;
   }
 
-  .left-panel h1 {
-    font-size: 20px;
+  h1 {
+    font-size: 24px;
   }
 
-  .card h2 {
+  button {
+    width: 90%;
     font-size: 18px;
+    padding: 0.75rem 1rem;
+    text-align: center;
   }
 
-  .social-buttons {
-    flex-wrap: wrap;
-    gap: 10px;
+  .front .big-name {
+    font-size: 20vw;
+    line-height: 1.1;
+    letter-spacing: 1px;
+  }
+}
+
+/* === Extra small screens (muy móviles) === */
+@media (max-width: 480px) {
+  .avatar {
+    max-width: 200px;
   }
 
-  .card {
-    padding: 15px;
+  button {
+    font-size: 16px;
+    padding: 0.6rem 0.9rem;
   }
 
-  .card .content {
-    max-height: none;
-    opacity: 1;
-    margin-top: 10px;
+  .front .big-name {
+    font-size: 24vw;
   }
 }
